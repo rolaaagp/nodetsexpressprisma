@@ -1,19 +1,11 @@
 import { Router } from "express";
-import { prisma } from "../providers/db";
+import { getCategories } from "../../controllers/category/categories.controller";
+import { prisma } from "../../providers/db/db";
 
 const router = Router();
 
 //Getters
-router.get("/", async (_req, res, next) => {
-  try {
-    const categories = await prisma.category.findMany({
-      include: { products: false },
-    });
-    res.json(categories);
-  } catch (error) {
-    next(error);
-  }
-});
+router.get("/", getCategories);
 
 router.get("/:id", async (req, res, next) => {
   try {
